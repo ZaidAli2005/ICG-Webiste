@@ -39,6 +39,32 @@ export const SITE = {
     href: "https://delight-admin-portal.sohaibsheikh6299.workers.dev/",
   },
 
+  /**
+ * Mobile app downloads.
+ *
+ * `apkUrl` points at GitHub Releases' `latest` alias, which is *stable*:
+ * publish a new release and this URL serves the newest APK with no code
+ * change here. That is how a future APK replaces the current one.
+ *
+ * Once the app is on Google Play, set `playStoreUrl` and every download
+ * button on the site switches to the Play Store automatically — the APK
+ * button stays available as a fallback for devices without Play.
+ */
+  app: {
+    name: "GIC Gujranwala",
+    tagline: "Attendance, results, fees and admissions — in your pocket.",
+    android: {
+      apkUrl:
+        "https://github.com/ZaidAli2005/ICG-Webiste/releases/latest/download/gic-gujranwala.apk",
+      fileName: "gic-gujranwala.apk",
+      version: "1.0.0",
+      size: "—",
+      minAndroid: "Android 7.0 or later",
+    },
+    /** null = offer the APK. Set a URL once the Play listing is live. */
+    playStoreUrl: null as string | null,
+  },
+
   socials: [
     {
       label: "Facebook",
@@ -76,6 +102,7 @@ export const NAV = [
   { label: "Programs", to: "/programs" },
   { label: "Admissions", to: "/admissions" },
   { label: "Campus Life", to: "/campus-life" },
+  { label: "Mobile App", to: "/app" },
   { label: "Contact", to: "/contact" },
 ] as const;
 

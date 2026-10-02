@@ -10,6 +10,7 @@ import {
   GraduationCap,
   Navigation,
   ArrowUp,
+  Smartphone,
 } from "lucide-react";
 import { NAV, SITE } from "@/data/site";
 import { ImgMark } from "@/components/ui/Img";
@@ -56,8 +57,16 @@ export function Footer() {
       {/* ---------- Quick actions ---------- */}
       <section className="border-b border-white/10 bg-white/[0.03]">
         <div className="container-page py-8">
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {[
+              {
+                href: SITE.app.playStoreUrl ?? SITE.app.android.apkUrl,
+                icon: Smartphone,
+                title: "Mobile App",
+                note: SITE.app.playStoreUrl ? "Get it on Google Play" : "Download for Android",
+                external: true,
+                download: SITE.app.playStoreUrl ? undefined : SITE.app.android.fileName,
+              },
               {
                 href: "/admissions",
                 internal: true,
@@ -66,7 +75,7 @@ export function Footer() {
                 note: "Eligibility & criteria",
               },
               {
-                href: `${SITE.phones[0].href}`,
+                href: SITE.phones[0].href,
                 icon: FileText,
                 title: "Prospectus",
                 note: "Call the college office",
@@ -117,8 +126,11 @@ export function Footer() {
                   ) : (
                     <a
                       href={a.href}
-                      target={a.internal ? undefined : "_blank"}
+                      // Download links stay in-tab so the browser's save
+                      // dialog is not hijacked by a new tab.
+                      target={a.download ? undefined : "_blank"}
                       rel="noreferrer"
+                      download={a.download}
                       className={cls}
                     >
                       {inner}

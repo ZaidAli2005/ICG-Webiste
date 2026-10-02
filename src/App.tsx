@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 
+const AppDownload = lazy(() => import("@/pages/AppDownload"));
 const Faculty = lazy(() => import("@/pages/Faculty"));
 const Home = lazy(() => import("@/pages/Home"));
 const About = lazy(() => import("@/pages/About"));
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="programs" element={<Programs />} />
             <Route path="admissions" element={<Admissions />} />
             <Route path="campus-life" element={<CampusLife />} />
+            <Route path="app" element={<AppDownload />} />
             <Route path="contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Route>
