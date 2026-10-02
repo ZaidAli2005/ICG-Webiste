@@ -26,7 +26,9 @@ function RouteFallback() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    // basename must match Vite's `base`, otherwise routing breaks when the
+    // app is served from a subpath such as GitHub Pages' /<repo>/.
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route element={<Layout />}>
