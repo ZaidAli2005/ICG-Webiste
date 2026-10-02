@@ -49,6 +49,30 @@ Defined in `tailwind.config.js` — swap these to rebrand the whole site:
 - `ink.*` / `paper` — text and page background
 - `font-display` (Fraunces) for headings, `font-sans` (Inter) for body
 
+## Deploy to Render
+
+`render.yaml` is committed, so Render can create the site from the Blueprint:
+
+1. Go to [dashboard.render.com](https://dashboard.render.com) → **New** → **Blueprint**
+2. Connect/select this repo (`ZaidAli2005/ICG-Webiste`)
+3. Render reads `render.yaml` and pre-fills everything — accept
+4. Once the build succeeds the site is live at `https://gicg-website.onrender.com`
+
+The blueprint sets:
+
+| Setting | Value |
+| --- | --- |
+| Build command | `npm ci && npm run build` |
+| Publish path | `./dist` |
+| SPA rewrite | `/*` → `/index.html` |
+| Assets cache | `max-age=31536000, immutable` (hashed filenames) |
+| `index.html` cache | `no-cache` (so clients never pin a stale build) |
+
+The rewrite rule is the important one — this is a client-routed SPA, so without it
+a refresh on `/about` or `/faculty` returns 404.
+
+Every push to `main` triggers a new deploy automatically.
+
 ## Notes
 
 - Route-level code splitting is on; each page is its own chunk.
