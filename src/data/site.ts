@@ -5,6 +5,8 @@
 
 export const SITE = {
   shortName: "GIC",
+  /** Compact mark for narrow screens, where the full name would wrap. */
+  nameShort: "GIC Gujranwala",
   name: "Government Islamia Graduate College",
   nameFull: "Government Islamia Graduate College, Gujranwala",
   tagline: "Est. 1917",

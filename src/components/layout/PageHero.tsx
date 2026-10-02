@@ -29,8 +29,8 @@ export function PageHero({ eyebrow, title, lede, image, breadcrumb, children }: 
         </>
       )}
 
-      <div className="container-page relative py-20 sm:py-24 lg:py-28">
-        <nav aria-label="Breadcrumb" className="mb-7">
+      <div className="container-page relative py-14 sm:py-20 lg:py-28">
+        <nav aria-label="Breadcrumb" className="mb-6 sm:mb-7">
           <ol className="flex items-center gap-1.5 text-[12.5px] text-brand-100/60">
             <li>
               <Link to="/" className="transition-colors hover:text-white">
@@ -46,12 +46,12 @@ export function PageHero({ eyebrow, title, lede, image, breadcrumb, children }: 
         <h1 className="max-w-4xl text-display-md font-semibold text-white text-balance">{title}</h1>
 
         {lede && (
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-brand-100/75 sm:text-lg">
+          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-brand-100/75 sm:mt-6 sm:text-lg">
             {lede}
           </p>
         )}
 
-        {children && <div className="mt-10">{children}</div>}
+        {children && <div className="mt-8 sm:mt-10">{children}</div>}
       </div>
     </section>
   );

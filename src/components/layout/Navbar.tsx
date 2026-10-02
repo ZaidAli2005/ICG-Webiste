@@ -97,18 +97,21 @@ export function Navbar() {
               />
             </span>
 
-            <span className="hidden leading-tight xl:block">
+            {/* The name is never hidden — on narrow screens a compact form is
+                used instead, since there is no inline nav competing for room. */}
+            <span className="block min-w-0 leading-tight">
               <span
                 className={cn(
-                  "block font-display text-[14px] font-bold tracking-tight transition-colors",
+                  "block truncate font-display text-[13px] font-bold tracking-tight transition-colors sm:text-[14px]",
                   overHero ? "text-white" : "text-ink",
                 )}
               >
-                {SITE.name}
+                <span className="lg:hidden">{SITE.nameShort}</span>
+                <span className="hidden lg:inline">{SITE.name}</span>
               </span>
               <span
                 className={cn(
-                  "mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.18em] transition-colors",
+                  "mt-0.5 hidden text-[10px] font-semibold uppercase tracking-[0.16em] transition-colors sm:block",
                   overHero ? "text-gold-300" : "text-brand-700",
                 )}
               >
@@ -159,7 +162,7 @@ export function Navbar() {
             <Link
               to="/admissions"
               className={cn(
-                "group relative hidden overflow-hidden whitespace-nowrap rounded-full px-5 py-2.5 text-[13px] font-semibold shadow-card transition-all duration-300 ease-spring hover:shadow-lift active:scale-[.98] sm:inline-flex",
+                "group relative inline-flex overflow-hidden whitespace-nowrap rounded-full px-3.5 py-2.5 text-[12px] font-semibold shadow-card transition-all duration-300 ease-spring hover:shadow-lift active:scale-[.98] sm:px-5 sm:text-[13px]",
                 overHero ? "bg-gold-400 text-brand-950" : "bg-brand-700 text-white",
               )}
             >
@@ -168,7 +171,8 @@ export function Navbar() {
                 className="absolute inset-0 translate-y-full bg-gold-300 transition-transform duration-300 ease-spring group-hover:translate-y-0"
               />
               <span className="relative flex items-center gap-1.5">
-                Apply Now
+                <span className="sm:hidden">Apply</span>
+                <span className="hidden sm:inline">Apply Now</span>
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
             </Link>

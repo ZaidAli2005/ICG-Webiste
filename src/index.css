@@ -51,12 +51,12 @@
 
   /* ---------- Type ---------- */
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-700;
+    @apply inline-flex items-baseline gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-700;
   }
 
   .eyebrow::before {
     content: "";
-    @apply h-px w-6 bg-gold-400;
+    @apply mt-1.5 h-px w-6 shrink-0 bg-gold-400;
   }
 
   .eyebrow-light {

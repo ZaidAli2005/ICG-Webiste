@@ -45,7 +45,7 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative isolate -mt-[calc(var(--nav-h))] flex min-h-[92svh] items-end overflow-hidden bg-brand-950 pt-[var(--nav-h)]">
+    <section className="relative isolate -mt-[calc(var(--nav-h))] flex min-h-[88svh] items-end overflow-hidden bg-brand-950 pt-[var(--nav-h)] lg:min-h-[92svh]">
       {/* Slides */}
       {SITE.media.hero.map((src, i) => (
         <div
@@ -60,36 +60,49 @@ function Hero() {
         </div>
       ))}
 
-      <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-to-t from-brand-950 via-brand-950/55 to-brand-950/35" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-dark opacity-70" />
+      {/* Bottom stays dark for text contrast; the top stays light so the photo
+          actually reads instead of turning into flat grey. */}
+      <div aria-hidden className="absolute inset-0 -z-20 bg-gradient-to-t from-brand-950 via-brand-950/70 to-brand-950/20" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-mesh-dark opacity-45" />
 
-      <div className="container-page relative w-full pb-16 pt-24 sm:pb-20 sm:pt-28 lg:pb-24">
+      <div className="container-page relative w-full pb-10 pt-16 sm:pb-16 sm:pt-24 lg:pb-24 lg:pt-28">
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl"
         >
-          <p className="eyebrow eyebrow-light mb-6 before:bg-gold-300">
-            Government of the Punjab · Est. {SITE.established}
+          {/* Kept short on phones so it never wraps to a stranded second line. */}
+          <p className="eyebrow eyebrow-light mb-4 before:bg-gold-300 sm:mb-6">
+            <span className="sm:hidden">Est. {SITE.established}</span>
+            <span className="hidden sm:inline">
+              Government of the Punjab · Est. {SITE.established}
+            </span>
           </p>
 
           <h1 className="text-display-lg font-semibold text-white text-balance">
             A century of teaching, in the heart of Gujranwala.
           </h1>
 
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-brand-100/80 sm:text-lg">
-            {SITE.name} has educated generations since {SITE.established} — today a full public
-            institution offering Intermediate groups and the four-year BS degree across the Faculty of
-            Science and the Faculty of Arts.
+          {/* Phones get a trimmed line so both hero buttons stay above the fold. */}
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-brand-100/80 sm:mt-7 sm:text-lg">
+            <span className="sm:hidden">
+              Educating generations since {SITE.established} — Intermediate groups and the four-year
+              BS degree.
+            </span>
+            <span className="hidden sm:inline">
+              {SITE.name} has educated generations since {SITE.established} — today a full public
+              institution offering Intermediate groups and the four-year BS degree across the Faculty
+              of Science and the Faculty of Arts.
+            </span>
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Link to="/admissions" className="btn-gold">
+          <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-10">
+            <Link to="/admissions" className="btn-gold btn-sm sm:px-6 sm:py-3 sm:text-sm">
               Admissions 2026
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/about" className="btn-ghost-light">
+            <Link to="/about" className="btn-ghost-light btn-sm sm:px-6 sm:py-3 sm:text-sm">
               Our history
             </Link>
           </div>
