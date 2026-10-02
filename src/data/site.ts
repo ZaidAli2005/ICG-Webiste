@@ -115,6 +115,23 @@ export const MILESTONES: Milestone[] = [
   },
 ];
 
+/** Office hours shown on the contact page — update here if they change. */
+export const OFFICE_HOURS = [
+  { day: "Monday – Friday", time: "8:00 AM – 2:30 PM" },
+  { day: "Saturday", time: "8:00 AM – 12:00 PM" },
+  { day: "Sunday & public holidays", time: "Closed" },
+];
+
+/** Quick routes for the most common reasons people contact a college. */
+export const ENQUIRY_TYPES = [
+  { value: "admission", label: "Admissions" },
+  { value: "prospectus", label: "Prospectus availability" },
+  { value: "fees", label: "Fees & dues" },
+  { value: "result", label: "Results & transcripts" },
+  { value: "department", label: "A department" },
+  { value: "other", label: "Something else" },
+];
+
 export const MISSION =
   "To provide a sound intellectual and scholastic foundation for the ideological, moral, social, economical and technological development of Pakistan's new generation, according to the teachings of Islam.";
 
