@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GIC">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#186357"/>
+      <stop offset="1" stop-color="#072622"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <!-- Graduation cap -->
+  <path d="M32 15 54 26 32 37 10 26z" fill="#e5ae2c"/>
+  <path d="M21 30.5V39c0 4.4 4.9 8 11 8s11-3.6 11-8v-8.5L32 37z" fill="#fdf9ed" opacity=".92"/>
+  <path d="M54 26v11" stroke="#f4df94" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="54" cy="38.5" r="2.6" fill="#e5ae2c"/>
+</svg>
