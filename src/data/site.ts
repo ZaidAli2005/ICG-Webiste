@@ -31,6 +31,14 @@ export const SITE = {
     { label: "General", address: "gic.cr.grw@gmail.com" },
   ],
 
+  /** Staff, teacher and student login for the management portal. */
+  portal: {
+    label: "Staff Portal",
+    description:
+      "Sign in to the college management portal for attendance, marks, fees and leave.",
+    href: "https://delight-admin-portal.sohaibsheikh6299.workers.dev/",
+  },
+
   socials: [
     {
       label: "Facebook",
