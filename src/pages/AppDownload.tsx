@@ -28,8 +28,20 @@ import { PageHero } from "@/components/layout/PageHero";
 import { AppScreensGallery } from "@/components/app/AppScreens";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading, DarkBand } from "@/components/ui/Section";
+import {
+  formatBytes,
+  formatReleaseDate,
+  useLatestRelease,
+} from "@/hooks/useLatestRelease";
 
 const { app } = SITE;
+
+/**
+ * The repo that hosts the app's GitHub Releases. Releases are the single source
+ * of truth for the version shown here, so publishing a new release updates the
+ * page with no code change. Only the repo slug lives in the source.
+ */
+const GITHUB_REPO = "ZaidAli2005/ICG-Webiste";
 
 /** Feature list carries icon names so the data file stays free of JSX. */
 const ICONS: Record<string, LucideIcon> = {
@@ -74,7 +86,47 @@ const STEPS = [
   },
 ];
 
+const LatestReleaseInfoInline = ({}) => {
+  const { useLatestRelease } = require("@/hooks/useLatestRelease");
+  const { formatDate } = require("@/lib/utils");
+  const { data, loading, error } = useLatestRelease(GITHUB_REPO);
+  
+  if (loading) {
+    return <p className="text-sm text-ink-muted">Checking for latest version...</p>;
+  }
+  if (error) {
+    return <p className="text-xs text-red-600">{error}</p>;
+  }
+  if (!data) return null;
+  
+  return (
+    <div className="mt-6 space-y-4">
+      <div className="rounded-xl border border-brand-900/10 bg-white p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Latest Release</p>
+            <p className="mt-1 font-display text-lg font-semibold text-brand-800">{data.version}</p>
+          </div>
+          {data.publishedAt && (
+            <p className="text-xs text-ink-muted">Released: {formatDate(data.publishedAt)}</p>
+          )}
+        </div>
+        {data.releaseNotes && (
+          <div className="mt-3">
+            <p className="text-sm font-semibold text-ink">What's New</p>
+            <pre className="mt-2 max-h-40 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-ink-muted">
+              {data.releaseNotes}
+            </pre>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default function AppDownload() {
+  const releaseState = useLatestRelease(GITHUB_REPO);
+
   return (
     <>
       <PageHero
@@ -85,32 +137,64 @@ export default function AppDownload() {
       >
         <div className="flex flex-wrap gap-3">
           {preferPlay ? (
-            <a href={app.playStoreUrl!} target="_blank" rel="noreferrer" className="btn-gold">
+            <a
+              href={app.playStoreUrl!}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-gold"
+            >
               <Play className="h-4 w-4" />
               Get it on Google Play
             </a>
           ) : (
-            <a href={app.android.apkUrl} download={app.android.fileName} className="btn-gold">
+            <a
+              href={releaseState.release?.apkUrl || app.android.apkUrl}
+              download={releaseState.release?.apkFileName || app.android.fileName}
+              className="btn-gold"
+            >
               <Download className="h-4 w-4" />
               Download APK
             </a>
           )}
 
           {preferPlay && (
-            <a href={app.android.apkUrl} download={app.android.fileName} className="btn-ghost-light">
+            <a
+              href={releaseState.release?.apkUrl || app.android.apkUrl}
+              download={releaseState.release?.apkFileName || app.android.fileName}
+              className="btn-ghost-light"
+            >
               <Download className="h-4 w-4" />
               Download APK instead
             </a>
           )}
         </div>
+
+        {releaseState.loading && (
+          <p className="mt-4 text-sm text-brand-100/80">
+            Checking for latest version...
+          </p>
+        )}
+        {releaseState.error && !releaseState.release?.apkUrl && (
+          <p className="mt-4 text-xs text-red-200/90">{releaseState.error}</p>
+        )}
       </PageHero>
 
       {/* Build facts */}
       <section className="border-b border-brand-900/10 bg-white">
         <div className="container-page grid gap-px py-0 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { label: "Version", value: app.android.version },
-            { label: "Download size", value: app.android.size },
+            {
+              label: "Version",
+              value: releaseState.loading
+                ? "Checking..."
+                : releaseState.release?.version ?? app.android.version,
+            },
+            {
+              label: "Download size",
+              value:
+                formatBytes(releaseState.release?.apkSize ?? 0) ||
+                app.android.size,
+            },
             { label: "Requires", value: app.android.minAndroid },
             { label: "Package", value: app.packageName },
           ].map((d, i) => (
@@ -219,7 +303,75 @@ export default function AppDownload() {
             />
 
             <Reveal delay={150}>
-              <div className="mt-9 rounded-2xl border border-brand-900/10 bg-white p-6">
+              {(() => {
+                const date = formatReleaseDate(
+                  releaseState.release?.publishedAt ?? "",
+                );
+                const size = formatBytes(releaseState.release?.apkSize ?? 0);
+
+                return (
+                  <div className="mt-9 rounded-2xl border border-brand-900/10 bg-white p-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="font-display text-base font-semibold text-ink">
+                        Latest Android App
+                      </h3>
+                      {releaseState.revalidating && (
+                        <span className="text-xs text-ink-muted">
+                          Updating...
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="mt-2 space-y-1.5 text-sm text-ink-muted">
+                      <p>
+                        Version:{" "}
+                        {releaseState.loading
+                          ? "Checking..."
+                          : releaseState.release?.version ?? app.android.version}
+                      </p>
+                      {date && (
+                        <p>Released: {date}</p>
+                      )}
+                      {size && <p>Download size: {size}</p>}
+                    </div>
+
+                    <a
+                      href={
+                        releaseState.release?.apkUrl || app.android.apkUrl
+                      }
+                      download={
+                        releaseState.release?.apkFileName ||
+                        app.android.fileName
+                      }
+                      className="btn-gold btn-sm mt-4 inline-flex gap-2"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download APK
+                    </a>
+
+                    {releaseState.error && !releaseState.release?.apkUrl && (
+                      <p className="mt-3 text-xs text-red-600">
+                        {releaseState.error}
+                      </p>
+                    )}
+
+                    {releaseState.release?.releaseNotes && (
+                      <div className="mt-4 border-t border-brand-900/10 pt-4">
+                        <p className="text-sm font-semibold text-ink">
+                          What's New
+                        </p>
+                        <pre className="mt-2 max-h-60 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-ink-muted">
+                          {releaseState.release.releaseNotes}
+                        </pre>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </Reveal>
+
+            <Reveal delay={200}>
+              <div className="mt-6 rounded-2xl border border-brand-900/10 bg-white p-6">
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                   <Lock className="h-5 w-5" />
                 </span>
@@ -274,8 +426,12 @@ export default function AppDownload() {
 
             <Reveal delay={200}>
               <a
-                href={app.android.apkUrl}
-                download={app.android.fileName}
+                href={
+                  releaseState.release?.apkUrl || app.android.apkUrl
+                }
+                download={
+                  releaseState.release?.apkFileName || app.android.fileName
+                }
                 className="btn-gold mt-6"
               >
                 <Download className="h-4 w-4" />
