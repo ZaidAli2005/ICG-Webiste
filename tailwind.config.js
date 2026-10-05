@@ -41,7 +41,11 @@ export default {
         ink: {
           DEFAULT: "#0c1512",
           soft: "#3d4a45",
-          muted: "#6b7873",
+          // Darkened from #6b7873, which sat at 4.41:1 on `paper` — just under
+          // the 4.5:1 floor for body text. 4.81:1 on paper and 4.60:1 on the
+          // brand-50 tint, while staying clearly lighter than `ink-soft` (8.9)
+          // so the three-step hierarchy still reads.
+          muted: "#65726d",
         },
         paper: "#fbfaf7",
       },
@@ -77,15 +81,24 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        /* Carousel progress is driven by the rAF clock in src/pages/Home.tsx
+           rather than a CSS animation, so the fill and the slide change are
+           always the same event. */
         "slide-down": {
           "0%": { opacity: "0", transform: "translateY(-12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        /* Draws a rule out from its left edge. */
+        "rule-in": {
+          "0%": { transform: "scaleX(0)" },
+          "100%": { transform: "scaleX(1)" },
         },
       },
       animation: {
         "fade-up": "fade-up .6s cubic-bezier(.22,1,.36,1) both",
         marquee: "marquee 38s linear infinite",
         "slide-down": "slide-down .28s cubic-bezier(.22,1,.36,1) both",
+        "rule-in": "rule-in .9s cubic-bezier(.22,1,.36,1) both",
       },
       transitionTimingFunction: {
         spring: "cubic-bezier(.22,1,.36,1)",
