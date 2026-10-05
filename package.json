@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/check-syntax.mjs && tsc -b && vite build",
     "build:pages": "node scripts/build-pages.mjs",
     "postbuild": "node scripts/postbuild.mjs",
     "deploy:pages": "node scripts/build-pages.mjs && gh-pages -d dist",

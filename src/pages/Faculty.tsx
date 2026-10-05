@@ -166,7 +166,7 @@ export default function Faculty() {
                       "hover:-translate-y-1.5 hover:border-gold-300/40 hover:shadow-lift",
                     )}
                   >
-                    <div className="relative aspect-4/5 overflow-hidden bg-gradient-to-br from-brand-50 via-brand-100/60 to-gold-50">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-brand-50 via-brand-100/60 to-gold-50">
                       <FacultyAvatar
                         image={m.image}
                         name={m.name}
