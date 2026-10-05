@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "node scripts/check-syntax.mjs && tsc -b && vite build",
+    "dev": "node api.js && vite",
+    "build": "node api.js && node scripts/check-syntax.mjs && tsc -b && vite build",
     "build:pages": "node scripts/build-pages.mjs",
     "postbuild": "node scripts/postbuild.mjs",
     "deploy:pages": "node scripts/build-pages.mjs && gh-pages -d dist",

@@ -174,7 +174,7 @@ export default function Programs() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search programs…"
                 aria-label="Search programs"
-                className="w-full rounded-full border border-brand-900/12 bg-white py-3 pl-11 pr-4 text-sm text-ink shadow-card outline-none transition-all placeholder:text-ink-muted/70 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20"
+                className="w-full rounded-full border border-brand-900/12 bg-white py-3 pl-11 pr-4 text-sm text-ink shadow-card outline-none transition-all placeholder:text-ink-muted focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20"
               />
             </div>
           </div>

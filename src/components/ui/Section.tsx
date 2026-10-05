@@ -44,7 +44,10 @@ export function SectionHeading({
         </Reveal>
       )}
 
-      <Reveal delay={60}>
+      {/* Headings wipe open from the top rather than sliding. A display face at
+          this size reads as deliberate when it is uncovered, and as a heavy
+          block being pushed past when it is translated. */}
+      <Reveal delay={60} variant="clip">
         <h2
           className={cn(
             "text-display-sm font-semibold text-balance",

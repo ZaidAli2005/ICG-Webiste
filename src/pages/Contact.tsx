@@ -77,7 +77,7 @@ export default function Contact() {
   }
 
   const field =
-    "w-full rounded-xl border border-brand-900/12 bg-paper px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-ink-muted/60 focus:border-brand-600 focus:bg-white focus:ring-2 focus:ring-brand-600/20";
+    "w-full rounded-xl border border-brand-900/12 bg-paper px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-ink-muted focus:border-brand-600 focus:bg-white focus:ring-2 focus:ring-brand-600/20";
 
   const label = "mb-2 block text-[11.5px] font-semibold uppercase tracking-[0.11em] text-ink-muted";
 
@@ -207,7 +207,7 @@ export default function Contact() {
                         <span
                           className={cn(
                             "whitespace-nowrap text-[13px] font-semibold",
-                            h.time === "Closed" ? "text-ink-muted/70" : "text-ink",
+                            h.time === "Closed" ? "text-ink-muted" : "text-ink",
                           )}
                         >
                           {h.time}
@@ -350,7 +350,7 @@ export default function Contact() {
 
                     <label className="block">
                       <span className={label}>
-                        Phone <span className="font-normal normal-case tracking-normal text-ink-muted/70">(optional)</span>
+                        Phone <span className="font-normal normal-case tracking-normal text-ink-muted">(optional)</span>
                       </span>
                       <input
                         type="tel"
@@ -387,7 +387,7 @@ export default function Contact() {
                         <Send className="h-4 w-4" />
                         Send enquiry
                       </button>
-                      <p className="text-[12px] leading-relaxed text-ink-muted/80">
+                      <p className="text-[12px] leading-relaxed text-ink-muted">
                         Opens your own email app — nothing is stored on this website.
                       </p>
                     </div>
