@@ -166,43 +166,42 @@ export default function Faculty() {
                       "hover:-translate-y-1.5 hover:border-gold-300/40 hover:shadow-lift",
                     )}
                   >
-                    <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-brand-50 via-brand-100/60 to-gold-50">
+                    <div className="relative flex flex-col items-center px-6 pt-8 text-center">
+                      {/* Photo in a soft brand-tinted ring rather than a
+                          full-bleed panel, so the circle reads as the subject. */}
                       <FacultyAvatar
                         image={m.image}
                         name={m.name}
-                        className="absolute inset-x-0 bottom-0 h-[86%] w-full rounded-none object-cover object-top transition-transform duration-700 ease-spring group-hover:scale-[1.06]"
-                      />
-                      <div
-                        aria-hidden
-                        className="absolute inset-0 bg-gradient-to-t from-brand-950/85 via-brand-950/25 to-transparent"
+                        shape="circle"
+                        className="h-24 w-24 ring-4 ring-brand-50 transition-all duration-500 ease-spring group-hover:ring-gold-200"
                       />
 
                       {m.role && (
-                        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-gold-400 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-brand-950 shadow-lift">
-                          <BadgeCheck className="h-3 w-3" />
+                        <span className="absolute left-5 top-5 inline-flex items-center gap-1 rounded-full bg-gold-400 px-2.5 py-1 text-[9.5px] font-semibold uppercase tracking-[0.08em] text-brand-950 shadow-card">
+                          <BadgeCheck className="h-2.5 w-2.5" />
                           {m.role}
                         </span>
                       )}
 
-                      <div className="absolute inset-x-0 bottom-0 p-5">
-                        <h3 className="font-display text-[17px] font-semibold leading-tight text-white">
-                          {m.name}
-                        </h3>
-                        <p className="mt-1 text-[12.5px] font-medium text-gold-300">{m.designation}</p>
-                      </div>
+                      <h3 className="mt-5 font-display text-[17px] font-semibold leading-tight text-ink">
+                        {m.name}
+                      </h3>
+                      <p className="mt-1.5 text-[12.5px] font-medium text-brand-700">
+                        {m.designation}
+                      </p>
                     </div>
 
-                    <div className="flex flex-1 flex-col p-5">
-                      <p className="text-[12.5px] font-semibold leading-snug text-brand-700">
+                    <div className="flex flex-1 flex-col px-6 pb-6 pt-4 text-center">
+                      <span className="inline-block self-center rounded-full bg-brand-50 px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.08em] text-brand-700">
                         {m.dept}
-                      </p>
+                      </span>
                       {m.qualification && (
-                        <p className="mt-1.5 text-[12px] leading-relaxed text-ink-muted">
+                        <p className="mt-3 text-[12px] leading-relaxed text-ink-muted">
                           {m.qualification}
                         </p>
                       )}
 
-                      <div className="mt-auto space-y-1.5 border-t border-brand-900/8 pt-4">
+                      <div className="mt-auto space-y-1.5 border-t border-brand-900/8 pt-4 text-left">
                         {m.email && (
                           <a
                             href={`mailto:${m.email}`}
