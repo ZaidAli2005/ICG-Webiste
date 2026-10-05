@@ -1,0 +1,225 @@
+/**
+ * Faculty directory, transcribed from the department pages on the college's
+ * existing site. Kept static so the public pages never depend on the
+ * management API being reachable.
+ *
+ * `image` is an absolute URL on gicg.edu.pk. Entries whose photo is missing
+ * there (the old site used a shared `user.png` placeholder) are left empty
+ * and fall back to initials at render time.
+ *
+ * A few email addresses were malformed in the source markup and have been
+ * corrected here — drop them if you would rather publish them verbatim.
+ */
+
+export type FacultyMember = {
+  name: string;
+  /** Head of Department / Vice Principal / Principal, where stated. */
+  role?: string;
+  designation: string;
+  qualification: string;
+  email?: string;
+  phone?: string;
+  image?: string;
+};
+
+export type FacultyGroup = {
+  slug: string;
+  dept: string;
+  faculty: "science" | "arts";
+  members: FacultyMember[];
+};
+
+const IMG = "https://gicg.edu.pk/img";
+
+export const FACULTY_GROUPS: FacultyGroup[] = [
+  {
+    slug: "botany-zoology-biology",
+    dept: "Botany, Zoology & Biology",
+    faculty: "science",
+    members: [
+      { name: "Dr. Iftikhar Ahmad", role: "Head of Department", designation: "Associate Professor", qualification: "PhD Zoology", email: "ifti758@gmail.com", phone: "+92 300 6472721", image: `${IMG}/FacultyofBotany,ZologyAndBiology/bot3.jpg` },
+      { name: "Muhammad Imran", designation: "Associate Professor", qualification: "M.Phil. Biology", email: "imranikrash@gmail.com", phone: "+92 300 7473889" },
+      { name: "Dr. Safeer Abbas", designation: "Assistant Professor", qualification: "Ph.D Zoology", email: "iminevitable110@gmail.com", phone: "+92 303 514 1872", image: `${IMG}/FacultyofBotany,ZologyAndBiology/bot5.jpg` },
+      { name: "Abdleeb Zahra", designation: "Lecturer", qualification: "" },
+      { name: "Abdul Rehman Anees", designation: "Lecturer", qualification: "M.Phil. Biology" },
+    ],
+  },
+  {
+    slug: "chemistry",
+    dept: "Chemistry",
+    faculty: "science",
+    members: [
+      { name: "Rana Khalid Mehmood", role: "Head of Department", designation: "Associate Professor", qualification: "M.Phil. Chemistry", email: "kmrana300@gmail.com", phone: "+92 300 7423979", image: `${IMG}/FacultyofChemistry/chem4.jpg` },
+      { name: "Dr. Muhammad Arshad", designation: "Assistant Professor", qualification: "PhD Chemistry", email: "dr.arshadgcu@gmail.com", phone: "+92 300 7401467", image: `${IMG}/FacultyofChemistry/chem5.jpg` },
+      { name: "Sarfraz Ahmad Khan", designation: "Assistant Professor", qualification: "M.Phil. Chemistry", email: "sarfrazahmadkhan74@gmail.com", phone: "+92 300 747387", image: `${IMG}/FacultyofChemistry/chem6.jpg` },
+      { name: "Aamer Shahzad", designation: "Assistant Professor", qualification: "M.Phil. Chemistry", email: "aamershahzad56@gmail.com", phone: "+92 333 8133458", image: `${IMG}/FacultyofChemistry/chem7.jpg` },
+      { name: "Naveed Shahzad", designation: "Assistant Professor", qualification: "M.Sc. Chemistry", email: "naveedshahzada2368@gmail.com", phone: "+92 331 6424550", image: `${IMG}/FacultyofChemistry/chem12.jpg` },
+      { name: "Rabail Jamil", designation: "Assistant Professor", qualification: "M.Sc. Chemistry", email: "rabeelbutt626@gmail.com", phone: "+92 324 7444078", image: `${IMG}/FacultyofChemistry/chem10.jpg` },
+      { name: "Zahid Riaz", designation: "Assistant Professor", qualification: "M.Phil. Chemistry", email: "zriaz99@gmail.com", phone: "+92 300 4368134", image: `${IMG}/FacultyofChemistry/chem9.jpg` },
+      { name: "Muhammad Luqman Ahmad", designation: "Assistant Professor", qualification: "M.Phil. Chemistry", email: "luqmanchaudhary69@gmail.com", phone: "+92 300 4568292" },
+      { name: "Zahoor Ahmad", designation: "Lecturer", qualification: "M.Phil. Chemistry", email: "z.ahmed6692@gmail.com", phone: "+92 302 6414736" },
+    ],
+  },
+  {
+    slug: "computer-science",
+    dept: "Computer Science",
+    faculty: "science",
+    members: [
+      { name: "Usman Ahmad Awan", role: "Head of Department", designation: "Assistant Professor", qualification: "Master in Computer Science (MCS)", email: "usmanahmadawan@gmail.com", phone: "+92 321 6433134", image: `${IMG}/FacultyofComputerScience/cs1.jpg` },
+      { name: "Muhammad Asif", designation: "Assistant Professor", qualification: "Master in Information Technology (MIT)", email: "masif.uosgrw@gmail.com", phone: "+92 321 6459596", image: `${IMG}/FacultyofComputerScience/cs3.jpg` },
+      { name: "Imran Shafique", designation: "Lecturer", qualification: "MS Computer Science", email: "imranshafique786@gmail.com", phone: "+92 322 9262150", image: `${IMG}/FacultyofComputerScience/cs2.jpg` },
+    ],
+  },
+  {
+    slug: "mathematics",
+    dept: "Mathematics",
+    faculty: "science",
+    members: [
+      { name: "Fazal Ur Rehman", role: "Head of Department", designation: "Assistant Professor", qualification: "M.Phil. Mathematics", email: "Fazalurrehman@gmail.com", phone: "+92 334 8097164", image: `${IMG}/FacultyofMathematics/math2.jpg` },
+      { name: "Abdul Shakoor", designation: "Assistant Professor", qualification: "M.Sc. Mathematics", email: "mAbdulShakoor@gmail.com", phone: "+92 300 0000000", image: `${IMG}/FacultyofMathematics/math3.jpeg` },
+      { name: "Mukhatar Hussain Naqvi", designation: "Assistant Professor", qualification: "M.Sc. Mathematics", email: "M-naqvi@yahoo.com", phone: "+92 3300 7490914", image: `${IMG}/FacultyofMathematics/math1.jpg` },
+      { name: "Muhammad Asif", designation: "Lecturer", qualification: "M.Sc. Mathematics", email: "M-asif@yahoo.com", phone: "+92 300 0000000", image: `${IMG}/FacultyofMathematics/math4.jpg` },
+      { name: "Tipu Adil", designation: "Lecturer", qualification: "M.Sc. Mathematics", email: "M-tipuadil@yahoo.com" },
+    ],
+  },
+  {
+    slug: "physics",
+    dept: "Physics",
+    faculty: "science",
+    members: [
+      { name: "Dr. M. Yousaf", role: "Head of Department", designation: "Assistant Professor", qualification: "M.Sc. Physics", email: "Muhammad_Yousaf@gmail.com" },
+      { name: "Muhammad Saleem", designation: "Assistant Professor", qualification: "M.Sc. Physics", email: "Msaleem@gmail.com", phone: "+92 333 8164760" },
+      { name: "Khuwaja Shahid Hameed", designation: "Assistant Professor", qualification: "M.Sc. Physics", email: "Kh-shahid@yahoo.com", phone: "+92 321 6477016", image: `${IMG}/FacultyofPhysics/phy3.jpg` },
+      { name: "Muhammad Yamin", designation: "Assistant Professor", qualification: "M.Sc. Physics", email: "M_yameen@yahoo.com", phone: "+92 301 7466711", image: `${IMG}/FacultyofPhysics/phy5.jpg` },
+      { name: "Sulman Mehmood", designation: "Assistant Professor", qualification: "M.Phil. Physics", email: "Sulman_mh@yahoo.com", phone: "+92 300 4791439", image: `${IMG}/FacultyofPhysics/phy4.jpg` },
+      { name: "Sheraz Ahmad", designation: "Assistant Professor", qualification: "" },
+      { name: "Abubakar Siddique", designation: "Assistant Professor", qualification: "M.Phil. Physics", email: "Abubakar-sd@yahoo.com", phone: "+92 300 0000000", image: `${IMG}/FacultyofPhysics/phy6.jpg` },
+      { name: "Adnan Sajid", designation: "Lecturer", qualification: "M.Sc. Physics", email: "M-adnan@yahoo.com", phone: "+92 321 6451264" },
+    ],
+  },
+  {
+    slug: "statistics",
+    dept: "Statistics",
+    faculty: "science",
+    members: [
+      { name: "Muhammad Rafi", role: "Head of Department", designation: "Assistant Professor", qualification: "M.Phil. Statistics", email: "muhammadrafi001@gmail.com", phone: "+92 333 8147177", image: `${IMG}/FacultyofStatistics/stat1.jpg` },
+      { name: "Shamas-u-Din Muzafar", designation: "Assistant Professor", qualification: "M.Sc. Statistics", email: "Shamas-DM@yahoo.com", phone: "+92 300 6438422", image: `${IMG}/FacultyofStatistics/stat2.jpg` },
+      { name: "Imran Bashir", designation: "Assistant Professor", qualification: "M.Sc. Statistics", email: "imran1929@gmail.com", phone: "+92 321 6475636", image: `${IMG}/FacultyofStatistics/stat3.jpg` },
+    ],
+  },
+  {
+    slug: "ctis",
+    dept: "College Teaching Interns",
+    faculty: "science",
+    members: [
+      { name: "Amna Nadeem", designation: "Lecturer — Computer Science", qualification: "BS Computer Science, M.Phil. Computer Science (in progress)", email: "nadeemamna303@gmail.com" },
+      { name: "Alia Javed", designation: "Lecturer — Zoology", qualification: "BS Botany, M.Phil. Botany", phone: "+92 343 6294550" },
+      { name: "Shan-E-Zohra", designation: "Lecturer — Economics", qualification: "BS Economics, M.Phil. Economics", phone: "+92 307 8607949" },
+      { name: "Muhammad Sadeeq", designation: "Lecturer — Physical Education", qualification: "M.Phil. Physical Education" },
+    ],
+  },
+  {
+    slug: "arabic-islamic-studies",
+    dept: "Arabic & Islamic Studies",
+    faculty: "arts",
+    members: [
+      { name: "Prof. Dr. M. Zaman Cheema", role: "Vice Principal & Head of Department", designation: "Assistant Professor", qualification: "M.Phil. Islamiyat", image: `${IMG}/FacultyofIslamiyat,Arabic/pr.jpg` },
+      { name: "Prof. Dr. Muhammad Akram Virk", role: "Principal", designation: "Assistant Professor", qualification: "PhD Islamiat", image: `${IMG}/Principle.jpeg` },
+      { name: "Dr. Mati Ur Rehman", designation: "Assistant Professor", qualification: "PhD Islamiyat", email: "mutimashhadi@gmail.com", phone: "+92 345 6542776", image: `${IMG}/FacultyofIslamiyat,Arabic/isl4.jpg` },
+      { name: "Dr. Hafiz Noman Ahmed", designation: "Lecturer", qualification: "PhD Islamiyat", email: "ahmadnuaman@gmail.com", phone: "+92 333 8147420", image: `${IMG}/FacultyofIslamiyat,Arabic/isl5.jpg` },
+      { name: "Dr. Hafiz Muhammad Rasheed", designation: "Assistant Professor", qualification: "PhD Islamiat", email: "racadmy@gmail.com", phone: "+92 321 7569942", image: `${IMG}/FacultyofIslamiyat,Arabic/isl8.jpg` },
+      { name: "Dr. Usman Liaquat", designation: "Lecturer", qualification: "PhD Islamiat", email: "usmanhijazi785@gmail.com", phone: "+92 343 1681060", image: `${IMG}/FacultyofIslamiyat,Arabic/isl6.jpg` },
+      { name: "Dr. Abdul Jabbar", designation: "Assistant Professor", qualification: "PhD Arabic", email: "A-Jabar@yahoo.com", image: `${IMG}/FacultyofIslamiyat,Arabic/isl7.jpg` },
+    ],
+  },
+  {
+    slug: "economics",
+    dept: "Economics",
+    faculty: "arts",
+    members: [
+      { name: "Muhammad Mushtaq", role: "Head of Department", designation: "Assistant Professor", qualification: "M.A. Economics", email: "muhammadmushtaq1970@gmail.com", phone: "+92 306 6413282", image: `${IMG}/FacultyofEconomics/eco1.jpg` },
+      { name: "Faisal Javed", designation: "Assistant Professor", qualification: "M.A. Economics", email: "shfaisal.713@gmail.com", phone: "+92 345 6538114", image: `${IMG}/FacultyofEconomics/eco3.jpg` },
+    ],
+  },
+  {
+    slug: "english",
+    dept: "English",
+    faculty: "arts",
+    members: [
+      { name: "Jameel Ahmed", role: "Head of Department", designation: "Associate Professor", qualification: "M.A. English", email: "J-Ahmed@yahoo.com", phone: "+92 321 6487838", image: `${IMG}/FacultyofEnglish/HafizJameelAhmad.jpeg` },
+      { name: "Naeem Raza", designation: "Associate Professor", qualification: "M.Phil. English", email: "naeemraza1967@gmail.com", phone: "+92 333 6437086", image: `${IMG}/FacultyofEnglish/eng2.jpg` },
+      { name: "Ahmad Raza", designation: "Associate Professor", qualification: "M.A. English", email: "a-raza@yahoo.com", phone: "+92 300 7401467", image: `${IMG}/FacultyofEnglish/eng5.jpg` },
+      { name: "Umar Daraz", designation: "Assistant Professor", qualification: "M.A. English, LLB", email: "umerdraz016@gmail.com", phone: "+92 300 6400167", image: `${IMG}/FacultyofEnglish/eng4.jpg` },
+      { name: "Shafiq Ahmad", designation: "Assistant Professor", qualification: "M.A. English", email: "Shafique-A@yahoo.com", phone: "+92 300 6434759", image: `${IMG}/FacultyofEnglish/eng6.jpg` },
+      { name: "Haroon Ahmad Khan", designation: "Assistant Professor", qualification: "M.A. English", email: "H-Khan@yahoo.com", phone: "+92 322 5581305", image: `${IMG}/FacultyofEnglish/eng8.jpg` },
+      { name: "Muhammad Salman Tariq", designation: "Assistant Professor", qualification: "M.Phil. English", email: "prof.salmantariq@gmail.com", phone: "+92 300 8998448", image: `${IMG}/FacultyofEnglish/MuhammadSalmanTariq.jpeg` },
+      { name: "Muhammad Awais", designation: "Assistant Professor", qualification: "M.Phil. English", email: "chawaisch@gmail.com", phone: "+92 345 5152000", image: `${IMG}/FacultyofEnglish/eng9.jpg` },
+      { name: "Muhammad Naeem", designation: "Assistant Professor", qualification: "M.A. English", email: "M-Naeem@yahoo.com", phone: "+92 301 8186249", image: `${IMG}/FacultyofEnglish/eng10.jpg` },
+      { name: "Muhammad Munir", designation: "Assistant Professor", qualification: "M.A. English", email: "M-munir@yahoo.com", phone: "+92 321 6457115", image: `${IMG}/FacultyofEnglish/eng11.jpg` },
+      { name: "Hafiz Kaleem Ullah", designation: "Assistant Professor", qualification: "M.Phil. English", email: "Kaleem_ullah@yahoo.com", phone: "+92 322 4112267", image: `${IMG}/FacultyofEnglish/eng14.jpg` },
+      { name: "Muhammad Bilal", designation: "Assistant Professor", qualification: "M.A. English", email: "M-bilal@yahoo.com", phone: "+92 345 6590070", image: `${IMG}/FacultyofEnglish/eng15.jpg` },
+      { name: "Muhammad Awais Haroon", designation: "Lecturer", qualification: "M.A. English", email: "awaisharoonbaig@gmail.com", phone: "+92 305 6212425", image: `${IMG}/FacultyofEnglish/MuhammadAwaisHaroon.jpeg` },
+      { name: "Bilawal Bashir", designation: "Lecturer", qualification: "M.A. English", email: "bs_formanite2@yahoo.com", phone: "+92 323 4819917", image: `${IMG}/FacultyofEnglish/BilawalBashir.jpeg` },
+    ],
+  },
+  {
+    slug: "political-science",
+    dept: "Political Science",
+    faculty: "arts",
+    members: [
+      { name: "Farooq Ahmad", role: "Head of Department", designation: "Assistant Professor", qualification: "M.A. Political Science", email: "Farooq-A@yahoo.com", phone: "+92 322 5649488", image: `${IMG}/FacultyofPolSci/polsc5.jpg` },
+      { name: "Inam-ur-Rahman", designation: "Assistant Professor", qualification: "M.A. Political Science", email: "inam@yahoo.com", phone: "+92 300 6433306", image: `${IMG}/FacultyofPolSci/polsc3.jpg` },
+      { name: "Maida Akram", designation: "Assistant Professor", qualification: "M.A. Political Science", email: "Ms-maida@yahoo.com", phone: "+92 344 7576000", image: `${IMG}/FacultyofPolSci/polsc2.jpg` },
+      { name: "Muhammad Farooq", designation: "Assistant Professor", qualification: "M.A. Political Science", email: "M-farooq@yahoo.com", phone: "+92 300 6453742", image: `${IMG}/FacultyofPolSci/polsc6.jpg` },
+      { name: "Muhammad Akbar Azeem", designation: "Assistant Professor", qualification: "M.Phil. International Relations", email: "akbarazeemhanjra@gmail.com", phone: "+92 300 9644379", image: `${IMG}/FacultyofPolSci/polsc7.jpg` },
+      { name: "Muhammad Imran Hafeez", designation: "Assistant Professor", qualification: "M.A. Political Science", email: "M_Imran_Hafeez@yahoo.com", image: `${IMG}/FacultyofPolSci/polsc8.jpg` },
+      { name: "Muhammad Asif", designation: "Assistant Professor", qualification: "M.A. Political Science", email: "M-asif@yahoo.com", phone: "+92 346 6010322" },
+      { name: "Muhammad Jahangir", designation: "Lecturer", qualification: "B.A. (Honours) Political Science", email: "M-Jahangir@yahoo.com", phone: "+92 331 4561912", image: `${IMG}/FacultyofPolSci/polsc9.jpg` },
+      { name: "Sultan Ul Arifeen", designation: "Lecturer", qualification: "M.A. Political Science" },
+    ],
+  },
+  {
+    slug: "library-science-social-work",
+    dept: "Library Science & Social Work",
+    faculty: "arts",
+    members: [
+      { name: "Sheikh M. Ikram Anjum", designation: "Lecturer", qualification: "M.A. Library Science", email: "Sh-ikram@yahoo.com", phone: "+92 300 6313910", image: `${IMG}/FacultyofPersion,Library/lib1.jpg` },
+      { name: "Muhammad Nasir", designation: "Assistant Professor", qualification: "M.A. Social Work", email: "nasir.sw45@gmail.com", phone: "+92 333 6726388", image: `${IMG}/FacultyofPersion,Library/so1.jpg` },
+    ],
+  },
+  {
+    slug: "pak-studies-history",
+    dept: "Pak Studies & History",
+    faculty: "arts",
+    members: [
+      { name: "Muhammad Saeed", designation: "Assistant Professor — Pak Studies", qualification: "M.A. History", email: "M-saeed@yahoo.com", phone: "+92 333 8105411", image: `${IMG}/FacultyofPSt,History/pks1.jpg` },
+      { name: "Shahbaz Ahmad", designation: "Assistant Professor — History", qualification: "M.A. History", email: "Shahbaz@yahoo.com", phone: "+92 346 4076540", image: `${IMG}/FacultyofPSt,History/his1.jpg` },
+    ],
+  },
+  {
+    slug: "urdu-punjabi",
+    dept: "Urdu & Punjabi",
+    faculty: "arts",
+    members: [
+      { name: "Faiz Akbar Khan", role: "Head of Department", designation: "Assistant Professor", qualification: "M.Phil. Urdu", email: "faizakbar@yahoo.com", phone: "+92 321 6413620", image: `${IMG}/FacultyofUrdu/urdu7.jpg` },
+      { name: "Muhammad Asghar", designation: "Associate Professor", qualification: "M.Phil. Urdu", email: "M-asghar@yahoo.com", phone: "+92 301 6457367", image: `${IMG}/FacultyofUrdu/urdu2.jpg` },
+      { name: "Faiz Rasool Faizan", designation: "Associate Professor", qualification: "M.A. Urdu", email: "Faizan@yahoo.com", phone: "+92 321 6421903", image: `${IMG}/FacultyofUrdu/urdu3.jpg` },
+      { name: "Rashid Awais", designation: "Assistant Professor", qualification: "M.A. Urdu", email: "Rashid-A@yahoo.com", phone: "+92 300 6473433", image: `${IMG}/FacultyofUrdu/urdu5.jpg` },
+      { name: "Riaz Ahmed Saher", designation: "Assistant Professor", qualification: "M.A. Urdu", email: "Riaz@yahoo.com", phone: "+92 300 6455539", image: `${IMG}/FacultyofUrdu/urdu8.jpg` },
+      { name: "Zahid Ali", designation: "Assistant Professor", qualification: "M.A. Urdu", email: "Zahid-Bt@yahoo.com", phone: "+92 300 6451045", image: `${IMG}/FacultyofUrdu/urdu10.jpg` },
+      { name: "Muhammad Azhar Iqbal", designation: "Assistant Professor", qualification: "M.A. Urdu", email: "Azhar-ali@yahoo.com", phone: "+92 301 6658090", image: `${IMG}/FacultyofUrdu/urdu11.jpg` },
+      { name: "Syed Shabbir Hussain Shah", designation: "Assistant Professor", qualification: "M.A. Urdu", email: "Syed-Shabbir@yahoo.com", phone: "+92 300 7499940", image: `${IMG}/FacultyofUrdu/urdu12.jpg` },
+      { name: "M. Irfan Ashraf", designation: "Lecturer", qualification: "M.A. Urdu", email: "Mirfan-Ashraf@yahoo.com" },
+      { name: "Sajeela Rehman", designation: "Assistant Professor", qualification: "" },
+      { name: "M. Irfan Arif", designation: "Lecturer", qualification: "" },
+      { name: "Ghulam Abbas Ahmad", designation: "Lecturer", qualification: "" },
+    ],
+  },
+];
+
+/** Flat list, for search and counts. */
+export const ALL_FACULTY = FACULTY_GROUPS.flatMap((g) =>
+  g.members.map((m) => ({ ...m, dept: g.dept, slug: g.slug })),
+);
+
+export const FACULTY_TOTAL = ALL_FACULTY.length;

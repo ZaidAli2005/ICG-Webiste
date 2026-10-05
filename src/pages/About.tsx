@@ -101,7 +101,7 @@ export default function About() {
                 <Img
                   src={PRINCIPAL.photo}
                   alt={PRINCIPAL.name}
-                  className="aspect-3/4 w-full"
+                  className="aspect-[3/4] w-full"
                   fallbackClassName="from-brand-800 via-brand-700 to-brand-950"
                 />
                 <div

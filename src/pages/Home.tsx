@@ -209,7 +209,7 @@ function Mission() {
               <Img
                 src={PRINCIPAL.photo}
                 alt={PRINCIPAL.name}
-                className="aspect-4/3 w-full"
+                className="aspect-[4/3] w-full"
                 fallbackClassName="from-brand-800 via-brand-700 to-brand-950"
               />
               <div
@@ -316,7 +316,7 @@ function Programs() {
                 to="/programs#intermediate"
                 className="card card-hover group block h-full overflow-hidden"
               >
-                <Img src={g.image} alt="" className="aspect-16/10 w-full" />
+                <Img src={g.image} alt="" className="aspect-[16/10] w-full" />
                 <div className="p-6">
                   <h4 className="font-display text-lg font-semibold text-ink transition-colors group-hover:text-brand-700">
                     {g.name}

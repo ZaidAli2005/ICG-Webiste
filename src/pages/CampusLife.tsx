@@ -76,7 +76,7 @@ export default function CampusLife() {
               <Reveal key={g.label} delay={i * 50}>
                 <figure
                   className={`group relative overflow-hidden rounded-2xl border border-white/10 ${
-                    i === 0 ? "col-span-2 lg:col-span-2 aspect-16/9" : "aspect-4/3"
+                    i === 0 ? "col-span-2 lg:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
                   }`}
                 >
                   <Img src={g.src} alt={g.label} className="h-full w-full" />

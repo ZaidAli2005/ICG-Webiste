@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { DEPARTMENTS, FACULTIES } from "@/data/site";
+import { FACULTY_GROUPS } from "@/data/faculty";
 import { PageHero } from "@/components/layout/PageHero";
 import { CallToAction } from "@/components/layout/CallToAction";
 import { Img } from "@/components/ui/Img";
@@ -141,9 +142,23 @@ export default function Departments() {
                       FACULTY_TONE[d.faculty].bar,
                     )}
                   />
-                  <h3 className="font-display text-[17px] font-semibold leading-snug text-ink">
-                    {d.name}
-                  </h3>
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-display text-[17px] font-semibold leading-snug text-ink">
+                      {d.name}
+                    </h3>
+                    {(() => {
+                      const g = FACULTY_GROUPS.find((x) => x.slug === d.slug);
+                      return g ? (
+                        <Link
+                          to="/faculty"
+                          className="shrink-0 rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700 transition-colors hover:bg-brand-700 hover:text-white"
+                          title={`${g.members.length} faculty members`}
+                        >
+                          {g.members.length}
+                        </Link>
+                      ) : null;
+                    })()}
+                  </div>
                   <p className="mt-3 text-[13.5px] leading-relaxed text-ink-muted">{d.blurb}</p>
                 </article>
               </Reveal>

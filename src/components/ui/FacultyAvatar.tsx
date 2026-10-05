@@ -1,13 +1,32 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-function initialsOf(name: string, lastName?: string) {
-  const first = name.trim().split(/\s+/)[0] ?? "";
-  const last = (lastName ?? "").trim().split(/\s+/)[0] ?? "";
-  return (first.charAt(0) + last.charAt(0)).toUpperCase() || "?";
+const HONORIFIC = /^(mr|mrs|ms|miss|dr|prof|shaikh|syed|maulana)\.?\s+/i;
+
+function stripHonorific(word: string) {
+  return word.replace(HONORIFIC, "");
 }
 
-/** Faculty photo with a branded initials fallback when the image is missing. */
+/**
+ * "Muhammad Akbar Azeem" -> "MA". Honors are dropped so a title never becomes
+ * the initial, and the surname falls back to the last word when the record has
+ * no separate lastName field.
+ */
+function initialsOf(name: string, lastName?: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  const explicit = (lastName ?? "").trim().split(/\s+/)[0] ?? "";
+  const first = stripHonorific(parts[0] ?? "");
+  const surname = explicit || parts[parts.length - 1] || "";
+  const a = first.charAt(0);
+  const b = stripHonorific(surname).charAt(0);
+  return (a + b).toUpperCase() || "?";
+}
+
+/**
+ * Faculty photo with a branded initials fallback when the image is missing.
+ * The fallback is a full-bleed panel rather than a circle so it still reads as
+ * a portrait slot inside the card's rectangular photo area.
+ */
 export function FacultyAvatar({
   image,
   name,
@@ -26,11 +45,13 @@ export function FacultyAvatar({
       <div
         aria-hidden
         className={cn(
-          "flex items-center justify-center rounded-full bg-gradient-to-br from-brand-800 to-brand-950 font-display text-white",
+          "absolute inset-0 flex items-center justify-center bg-gradient-to-br from-brand-700 via-brand-800 to-brand-950",
           className,
         )}
       >
-        <span className="text-gold-300">{initialsOf(name, lastName)}</span>
+        <span className="font-display text-4xl font-semibold tracking-tight text-gold-300">
+          {initialsOf(name, lastName)}
+        </span>
       </div>
     );
   }
@@ -38,11 +59,11 @@ export function FacultyAvatar({
   return (
     <img
       src={image}
-      alt={`${name} ${lastName ?? ""}`}
+      alt={`${name}${lastName ? ` ${lastName}` : ""}`}
       loading="lazy"
       decoding="async"
       onError={() => setFailed(true)}
-      className={cn("rounded-full object-cover", className)}
+      className={cn("object-cover", className)}
     />
   );
 }

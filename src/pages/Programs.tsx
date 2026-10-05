@@ -57,7 +57,7 @@ export default function Programs() {
             {INTERMEDIATE_GROUPS.map((g, i) => (
               <Reveal key={g.slug} delay={i * 60}>
                 <article className="card card-hover h-full overflow-hidden">
-                  <Img src={g.image} alt="" className="aspect-16/10 w-full" />
+                  <Img src={g.image} alt="" className="aspect-[16/10] w-full" />
                   <div className="p-6">
                     <h3 className="font-display text-lg font-semibold text-ink">{g.name}</h3>
                     <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">{g.streams}</p>
