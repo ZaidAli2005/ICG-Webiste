@@ -129,7 +129,7 @@ export default function Faculty() {
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search faculty…"
                   aria-label="Search faculty"
-                  className="w-full rounded-full border border-brand-900/12 bg-white py-3 pl-11 pr-10 text-sm text-ink shadow-card outline-none transition-all placeholder:text-ink-muted/70 focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20"
+                  className="w-full rounded-full border border-brand-900/12 bg-white py-3 pl-11 pr-10 text-sm text-ink shadow-card outline-none transition-all placeholder:text-ink-muted focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20"
                 />
                 {query && (
                   <button
@@ -149,7 +149,7 @@ export default function Faculty() {
               Showing <span className="font-semibold text-ink">{shown.length}</span>
               {shown.length !== FACULTY_TOTAL && ` of ${FACULTY_TOTAL}`} faculty
               {withPhoto > 0 && (
-                <span className="text-ink-muted/70"> · {withPhoto} with photographs</span>
+                <span> · {withPhoto} with photographs</span>
               )}
             </p>
           </div>
@@ -221,7 +221,7 @@ export default function Faculty() {
                           </a>
                         )}
                         {!m.email && !m.phone && (
-                          <p className="text-[12px] text-ink-muted/60">Contact via college office</p>
+                          <p className="text-[12px] text-ink-muted">Contact via college office</p>
                         )}
                       </div>
                     </div>

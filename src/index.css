@@ -145,8 +145,13 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    /* Staggering works by holding content at opacity 0 until its delay
+       elapses. Without collapsing the delay, a staggered group stays
+       invisible for its full delay even though the transition is instant. */
+    transition-delay: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
