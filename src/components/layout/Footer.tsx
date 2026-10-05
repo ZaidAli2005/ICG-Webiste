@@ -1,27 +1,10 @@
 import { Link } from "react-router-dom";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Facebook,
-  ArrowUpRight,
-  LogIn,
-  FileText,
-  GraduationCap,
-  Navigation,
-  ArrowUp,
-  Smartphone,
-} from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, ArrowUpRight, LogIn, ArrowUp } from "lucide-react";
 import { NAV, SITE } from "@/data/site";
 import { ImgMark } from "@/components/ui/Img";
 
 /** Read once at module load — the footer year never changes mid-session. */
 const YEAR = new Date().getFullYear();
-
-const MAPS_SEARCH =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    SITE.address.mapsQuery,
-  )}`;
 
 /** Column heading. */
 function ColHeading({ children }: { children: string }) {
@@ -53,95 +36,6 @@ export function Footer() {
         aria-hidden
         className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-gold-400/50 to-transparent"
       />
-
-      {/* ---------- Quick actions ---------- */}
-      <section className="border-b border-white/10 bg-white/[0.03]">
-        <div className="container-page py-8">
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {[
-              {
-                href: SITE.app.playStoreUrl ?? SITE.app.android.apkUrl,
-                icon: Smartphone,
-                title: "Mobile App",
-                note: SITE.app.playStoreUrl ? "Get it on Google Play" : "Download for Android",
-                external: true,
-                download: SITE.app.playStoreUrl ? undefined : SITE.app.android.fileName,
-              },
-              {
-                href: "/admissions",
-                internal: true,
-                icon: GraduationCap,
-                title: "Admissions",
-                note: "Eligibility & criteria",
-              },
-              {
-                href: SITE.phones[0].href,
-                icon: FileText,
-                title: "Prospectus",
-                note: "Call the college office",
-              },
-              {
-                href: SITE.portal.href,
-                icon: LogIn,
-                title: SITE.portal.label,
-                note: "Staff & student sign in",
-                highlight: true,
-              },
-              {
-                href: MAPS_SEARCH,
-                icon: Navigation,
-                title: "Find the campus",
-                note: "Open in Google Maps",
-              },
-            ].map((a) => {
-              const Icon = a.icon;
-              const inner = (
-                <>
-                  <span
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors duration-300 ${
-                      a.highlight
-                        ? "bg-gold-400/15 text-gold-300"
-                        : "bg-white/[.06] text-brand-100/70"
-                    } group-hover:bg-gold-400 group-hover:text-brand-950`}
-                  >
-                    <Icon className="h-4.5 w-4.5" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-semibold text-white">{a.title}</span>
-                    <span className="block text-[12px] text-brand-100/60">{a.note}</span>
-                  </span>
-                  <ArrowUpRight className="h-4 w-4 shrink-0 text-brand-100/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold-300" />
-                </>
-              );
-
-              const cls =
-                "group flex items-center gap-4 rounded-xl border border-white/10 bg-white/[.04] px-4 py-3.5 transition-all duration-300 ease-spring hover:-translate-y-0.5 hover:border-gold-300/35 hover:bg-white/[.07]";
-
-              return (
-                <li key={a.title}>
-                  {a.internal ? (
-                    <Link to={a.href} className={cls}>
-                      {inner}
-                    </Link>
-                  ) : (
-                    <a
-                      href={a.href}
-                      // Download links stay in-tab so the browser's save
-                      // dialog is not hijacked by a new tab.
-                      target={a.download ? undefined : "_blank"}
-                      rel="noreferrer"
-                      download={a.download}
-                      className={cls}
-                    >
-                      {inner}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
 
       {/* ---------- Main columns ---------- */}
       <div className="container-page py-14 lg:py-16">
