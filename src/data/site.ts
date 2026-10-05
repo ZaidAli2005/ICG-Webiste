@@ -51,15 +51,19 @@ export const SITE = {
  * button stays available as a fallback for devices without Play.
  */
   app: {
-    name: "GIC Gujranwala",
-    tagline: "Attendance, results, fees and admissions — in your pocket.",
+    name: "ICG University",
+    packageName: "com.example.icg",
+    tagline: "Attendance, lectures, exams, fees and notices — in your pocket.",
+    blurb:
+      "The college management app for students, teachers and staff of Government Islamia Graduate College, Gujranwala.",
     android: {
       apkUrl:
         "https://github.com/ZaidAli2005/ICG-Webiste/releases/latest/download/gic-gujranwala.apk",
       fileName: "gic-gujranwala.apk",
       version: "1.0.0",
-      size: "—",
-      minAndroid: "Android 7.0 or later",
+      size: "94 MB",
+      /** android:minSdkVersion="21" in the built manifest. */
+      minAndroid: "Android 5.0 or later",
     },
     /** null = offer the APK. Set a URL once the Play listing is live. */
     playStoreUrl: null as string | null,

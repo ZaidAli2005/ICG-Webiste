@@ -2,44 +2,67 @@ import { Link } from "react-router-dom";
 import {
   Download,
   ShieldCheck,
-  Wifi,
-  CalendarDays,
-  CreditCard,
-  ClipboardList,
-  BookOpen,
-  Bell,
   ArrowRight,
   Info,
   Play,
-  SmartphoneIcon,
+  LayoutDashboard,
+  CalendarCheck,
+  CalendarDays,
+  BookOpen,
+  FileText,
+  CreditCard,
+  Sparkles,
+  Megaphone,
+  Building2,
+  Users,
+  Lock,
+  LogIn,
+  MailCheck,
+  Clock3,
+  CheckCircle2,
+  type LucideIcon,
 } from "lucide-react";
 import { SITE } from "@/data/site";
+import { APP_FEATURES, APP_ROLES, APP_SECURITY } from "@/data/app";
 import { PageHero } from "@/components/layout/PageHero";
+import { AppScreensGallery } from "@/components/app/AppScreens";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/Section";
+import { SectionHeading, DarkBand } from "@/components/ui/Section";
 
 const { app } = SITE;
 
-/** Play Store wins when available; otherwise fall back to the APK. */
-const preferPlay = Boolean(app.playStoreUrl);
+/** Feature list carries icon names so the data file stays free of JSX. */
+const ICONS: Record<string, LucideIcon> = {
+  LayoutDashboard,
+  CalendarCheck,
+  CalendarDays,
+  BookOpen,
+  FileText,
+  CreditCard,
+  Sparkles,
+  Megaphone,
+  Building2,
+  ShieldCheck,
+};
 
-const FEATURES = [
-  { icon: CalendarDays, title: "Daily attendance", body: "Mark and view attendance per subject, without waiting for a register to be passed round." },
-  { icon: ClipboardList, title: "Results & assignments", body: "Marks, position and submitted work in one place instead of a noticeboard." },
-  { icon: CreditCard, title: "Fees", body: "Check dues and keep receipts on your phone for the whole session." },
-  { icon: BookOpen, title: "Admissions", body: "Prospectus details, eligibility criteria and the document checklist, on the go." },
-  { icon: Bell, title: "Notices", body: "Announcements from the college office, pushed instead of printed." },
-  { icon: Wifi, title: "Works on slow networks", body: "Built to stay usable on a mobile connection rather than assuming Wi-Fi." },
-];
+const SECURITY_ICONS: Record<string, LucideIcon> = {
+  "Secure Authentication": ShieldCheck,
+  "Smart Login": LogIn,
+  "Remember Me": Clock3,
+  "Forgot Password": MailCheck,
+};
+
+/** Play Store wins when available; otherwise the APK is the primary action. */
+const preferPlay = Boolean(app.playStoreUrl);
 
 const STEPS = [
   {
-    title: "Download the APK file",
-    body: "Your browser will save a file called gic-gujranwala.apk. Android may show a warning at this stage — that is expected for any app that is not installed from the Play Store.",
+    title: "Download the APK",
+    body: "Your browser saves a file called gic-gujranwala.apk. Android will warn you at this stage — that is expected for any app not installed from the Play Store.",
   },
   {
     title: "Allow installs from your browser",
-    body: "When Android asks, tap Settings and turn on Allow from this source. This permission is per-app; nothing else on your phone is affected, and you can switch it off again after installing.",
+    body: "When Android asks, tap Settings and turn on Allow from this source. The permission is per-app, so nothing else on your phone is affected and you can switch it off again afterwards.",
   },
   {
     title: "Open the file and install",
@@ -47,7 +70,7 @@ const STEPS = [
   },
   {
     title: "Sign in",
-    body: "Open the app and sign in with the same email address you use for the college portal.",
+    body: "Open the app and sign in with the same email address you use for the college portal. Your role decides which portal you see.",
   },
 ];
 
@@ -56,159 +79,172 @@ export default function AppDownload() {
     <>
       <PageHero
         breadcrumb="Mobile App"
-        eyebrow="Mobile App"
-        title="The college, in your pocket."
-        lede={app.tagline}
-      />
+        eyebrow={`${app.name} · Android`}
+        title="The whole college, in your pocket."
+        lede={app.blurb}
+      >
+        <div className="flex flex-wrap gap-3">
+          {preferPlay ? (
+            <a href={app.playStoreUrl!} target="_blank" rel="noreferrer" className="btn-gold">
+              <Play className="h-4 w-4" />
+              Get it on Google Play
+            </a>
+          ) : (
+            <a href={app.android.apkUrl} download={app.android.fileName} className="btn-gold">
+              <Download className="h-4 w-4" />
+              Download APK
+            </a>
+          )}
 
-      {/* Download panel */}
+          {preferPlay && (
+            <a href={app.android.apkUrl} download={app.android.fileName} className="btn-ghost-light">
+              <Download className="h-4 w-4" />
+              Download APK instead
+            </a>
+          )}
+        </div>
+      </PageHero>
+
+      {/* Build facts */}
+      <section className="border-b border-brand-900/10 bg-white">
+        <div className="container-page grid gap-px py-0 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { label: "Version", value: app.android.version },
+            { label: "Download size", value: app.android.size },
+            { label: "Requires", value: app.android.minAndroid },
+            { label: "Package", value: app.packageName },
+          ].map((d, i) => (
+            <Reveal key={d.label} delay={i * 55}>
+              <div className="border-brand-900/10 py-6 sm:border-r sm:pr-6 lg:last:border-r-0">
+                <p className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-ink-muted">
+                  {d.label}
+                </p>
+                <p className="mt-1.5 break-all font-display text-[15px] font-semibold text-brand-800">
+                  {d.value}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Screens */}
       <section className="section">
-        <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Copy + buttons */}
-          <div>
-            <SectionHeading
-              eyebrow="Get the app"
-              title="Free, and built for students."
-              lede="The app is free to download and carries no advertising. Everything in it is also available on this website, so nothing is locked away."
-            />
+        <div className="container-page">
+          <SectionHeading
+            align="center"
+            eyebrow="App Screens"
+            title="Beautiful, intuitive interface."
+            lede="Every screen is built for a single job, so the thing you came to check is never more than a tap away."
+          />
 
-            <Reveal delay={120}>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                {/* Primary — Play Store if live, otherwise the APK */}
-                {preferPlay ? (
-                  <a href={app.playStoreUrl!} target="_blank" rel="noreferrer" className="btn-primary">
-                    <Play className="h-4 w-4" />
-                    Get it on Google Play
-                  </a>
-                ) : (
-                  <a href={app.android.apkUrl} download={app.android.fileName} className="btn-primary">
-                    <Download className="h-4 w-4" />
-                    Download APK
-                  </a>
-                )}
-
-                {/* Secondary — always keep the direct APK as a fallback */}
-                {preferPlay && (
-                  <a href={app.android.apkUrl} download={app.android.fileName} className="btn-outline">
-                    <Download className="h-4 w-4" />
-                    Download APK instead
-                  </a>
-                )}
-
-                <Link to="/contact" className="btn-outline">
-                  Report a problem
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </Reveal>
-
-            {/* Build details */}
-            <Reveal delay={180}>
-              <dl className="mt-9 grid gap-px overflow-hidden rounded-2xl border border-brand-900/10 bg-brand-900/10 sm:grid-cols-3">
-                {[
-                  { label: "Version", value: app.android.version },
-                  { label: "File size", value: app.android.size },
-                  { label: "Requires", value: app.android.minAndroid },
-                ].map((d) => (
-                  <div key={d.label} className="bg-white px-5 py-4">
-                    <dt className="text-[10.5px] font-semibold uppercase tracking-[0.13em] text-ink-muted">
-                      {d.label}
-                    </dt>
-                    <dd className="mt-1 font-display text-[15px] font-semibold text-ink">{d.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
-
-            <Reveal delay={220}>
-              <p className="mt-6 flex items-start gap-2.5 rounded-xl border border-gold-400/25 bg-gold-50/50 px-5 py-4 text-[13px] leading-relaxed text-gold-900">
-                <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                <span>
-                  Installing outside the Play Store means Android will ask you to allow installs from
-                  your browser. This is normal for college apps and only affects this one download.
-                </span>
-              </p>
-            </Reveal>
-          </div>
-
-          {/* Phone mockup */}
-          <Reveal delay={80}>
-            <div className="relative mx-auto w-full max-w-[280px]">
-              <div
-                aria-hidden
-                className="absolute -inset-8 -z-10 rounded-[3rem] bg-gradient-to-br from-brand-200/50 via-gold-200/40 to-transparent blur-2xl"
-              />
-              <div className="relative rounded-[2.25rem] border border-brand-900/12 bg-brand-950 p-2.5 shadow-lift">
-                <div className="relative overflow-hidden rounded-[1.75rem] bg-brand-900">
-                  <div className="flex items-center justify-between px-5 pb-2 pt-4">
-                    <span className="text-[10px] font-semibold text-brand-100/60">9:41</span>
-                    <span aria-hidden className="h-1.5 w-10 rounded-full bg-white/25" />
-                  </div>
-
-                  <div className="px-5 pb-6 pt-6">
-                    <div className="flex items-center gap-2.5">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-400 text-brand-950">
-                        <SmartphoneIcon className="h-4 w-4" />
-                      </span>
-                      <span className="text-[13px] font-semibold text-white">{app.name}</span>
-                    </div>
-
-                    <div className="mt-5 grid grid-cols-2 gap-2.5">
-                      {[
-                        { k: "Attendance", v: "94%", accent: true },
-                        { k: "Position", v: "3rd" },
-                        { k: "Fees due", v: "Nil", accent: true },
-                        { k: "Results", v: "5 sems" },
-                      ].map((s) => (
-                        <div key={s.k} className="rounded-lg bg-white/[.06] p-3">
-                          <p className="text-[9px] uppercase tracking-[0.1em] text-brand-100/50">{s.k}</p>
-                          <p
-                            className={`mt-0.5 font-display text-[15px] font-semibold ${
-                              s.accent ? "text-gold-300" : "text-white"
-                            }`}
-                          >
-                            {s.v}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-4 space-y-2">
-                      {[68, 45, 82].map((w, i) => (
-                        <div key={i} className="flex items-center gap-2.5">
-                          <span className="h-5 w-5 shrink-0 rounded bg-white/10" />
-                          <span className="h-1.5 rounded-full bg-white/15" style={{ width: `${w}%` }} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <Reveal delay={100}>
+            <AppScreensGallery className="mt-14" />
           </Reveal>
         </div>
       </section>
 
       {/* Features */}
-      <section className="section border-t border-brand-900/10 bg-white">
+      <DarkBand className="section">
         <div className="container-page">
           <SectionHeading
-            eyebrow="What it does"
-            title="Built around what students actually check."
-            lede="Attendance, results, fees and notices — the four things that used to mean a queue, a noticeboard or a phone call."
+            eyebrow="Core Features"
+            title="Everything you need."
+            tone="light"
+            lede="A comprehensive platform designed for modern college management with real-time updates and a seamless experience."
           />
 
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map((f, i) => {
-              const Icon = f.icon;
+            {APP_FEATURES.map((f, i) => {
+              const Icon = ICONS[f.icon] ?? LayoutDashboard;
               return (
-                <Reveal key={f.title} delay={i * 55}>
-                  <article className="card card-hover group h-full p-7">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition-colors duration-300 group-hover:bg-brand-700 group-hover:text-white">
+                <Reveal key={f.title} delay={i * 50}>
+                  <article className="group h-full rounded-2xl border border-white/10 bg-white/[.04] p-7 transition-all duration-300 ease-spring hover:-translate-y-1 hover:border-gold-300/30 hover:bg-white/[.07]">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold-400/15 text-gold-300 transition-colors duration-300 group-hover:bg-gold-400 group-hover:text-brand-950">
                       <Icon className="h-5 w-5" />
                     </span>
-                    <h3 className="mt-5 font-display text-[17px] font-semibold text-ink">{f.title}</h3>
-                    <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-muted">{f.body}</p>
+                    <h3 className="mt-5 font-display text-[17px] font-semibold text-white">{f.title}</h3>
+                    <p className="mt-2.5 text-[13.5px] leading-relaxed text-brand-100/65">{f.body}</p>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </DarkBand>
+
+      {/* Roles */}
+      <section className="section bg-white">
+        <div className="container-page">
+          <SectionHeading
+            align="center"
+            eyebrow="User Roles"
+            title="A different portal for everyone."
+            lede="The same app, four distinct experiences. Each role sees only the tools and records that belong to them."
+          />
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {APP_ROLES.map((r, i) => (
+              <Reveal key={r.role} delay={i * 60}>
+                <article className="card card-hover flex h-full flex-col p-7">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                    <Users className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 font-display text-lg font-semibold text-ink">{r.role}</h3>
+                  <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">{r.summary}</p>
+
+                  <ul className="mt-5 space-y-2.5 border-t border-brand-900/8 pt-5">
+                    {r.points.map((p) => (
+                      <li key={p} className="flex gap-2.5">
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-500" />
+                        <span className="text-[12.5px] leading-relaxed text-ink-soft">{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Security */}
+      <section className="section border-t border-brand-900/10">
+        <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <SectionHeading
+              eyebrow="Security"
+              title="Role-based access control."
+              lede="Signing in does more than open the app — it decides which parts of the college you are allowed to see."
+            />
+
+            <Reveal delay={150}>
+              <div className="mt-9 rounded-2xl border border-brand-900/10 bg-white p-6">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                  <Lock className="h-5 w-5" />
+                </span>
+                <h3 className="mt-4 font-display text-base font-semibold text-ink">
+                  Protected by JWT tokens
+                </h3>
+                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-muted">
+                  Sessions are issued as signed tokens and expire on their own, so a shared or stale
+                  session cannot be replayed on another device.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+            {APP_SECURITY.map((s, i) => {
+              const Icon = SECURITY_ICONS[s.title] ?? ShieldCheck;
+              return (
+                <Reveal key={s.title} delay={i * 60}>
+                  <article className="card card-hover h-full p-6">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                      <Icon className="h-4.5 w-4.5" />
+                    </span>
+                    <h3 className="mt-4 font-display text-[15px] font-semibold text-ink">{s.title}</h3>
+                    <p className="mt-2 text-[13px] leading-relaxed text-ink-muted">{s.body}</p>
                   </article>
                 </Reveal>
               );
@@ -217,43 +253,73 @@ export default function AppDownload() {
         </div>
       </section>
 
-      {/* How to install */}
-      <section className="section">
+      {/* Install */}
+      <DarkBand className="section">
         <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <SectionHeading eyebrow="How to install" title="Four steps." />
-            <Reveal delay={150}>
-              <div className="mt-9 rounded-2xl border border-brand-900/10 bg-white p-6">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
-                  <ShieldCheck className="h-5 w-5" />
-                </span>
-                <h3 className="mt-4 font-display text-base font-semibold text-ink">
-                  Is it safe to install?
-                </h3>
-                <p className="mt-2 text-[13.5px] leading-relaxed text-ink-muted">
-                  The file is published as a GitHub release on this repository, so its history is
-                  visible and every new version is recorded. Once the app reaches the Play Store, Play
-                  will take over hosting and updates.
+            <SectionHeading eyebrow="How to install" title="Four steps." tone="light" />
+
+            <Reveal delay={120}>
+              <div className="mt-9 rounded-2xl border border-gold-300/25 bg-white/[.04] p-6">
+                <p className="flex items-start gap-3 text-[13.5px] leading-relaxed text-brand-100/75">
+                  <Info className="mt-0.5 h-4 w-4 shrink-0 text-gold-300" />
+                  <span>
+                    Installing outside the Play Store means Android asks you to allow installs from
+                    your browser. This is normal for college apps, affects only this one download, and
+                    disappears once the app reaches the Play Store.
+                  </span>
                 </p>
               </div>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <a
+                href={app.android.apkUrl}
+                download={app.android.fileName}
+                className="btn-gold mt-6"
+              >
+                <Download className="h-4 w-4" />
+                Download {app.android.size}
+              </a>
             </Reveal>
           </div>
 
           <ol className="space-y-4 lg:col-span-7">
             {STEPS.map((s, i) => (
               <Reveal key={s.title} as="li" delay={i * 60}>
-                <div className="card flex gap-5 p-6">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-800 font-display text-[14px] font-semibold text-white">
+                <div className="card-dark flex gap-5 p-6">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-400 font-display text-[14px] font-semibold text-brand-950">
                     {i + 1}
                   </span>
                   <div>
-                    <h3 className="font-display text-[15px] font-semibold text-ink">{s.title}</h3>
-                    <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-muted">{s.body}</p>
+                    <h3 className="font-display text-[15px] font-semibold text-white">{s.title}</h3>
+                    <p className="mt-1.5 text-[13.5px] leading-relaxed text-brand-100/70">{s.body}</p>
                   </div>
                 </div>
               </Reveal>
             ))}
           </ol>
+        </div>
+      </DarkBand>
+
+      {/* Closing */}
+      <section className="bg-white">
+        <div className="container-page flex flex-col items-center gap-6 py-16 text-center lg:flex-row lg:justify-between lg:text-left">
+          <Reveal>
+            <h3 className="font-display text-xl font-semibold text-ink">
+              Trouble installing, or a problem in the app?
+            </h3>
+            <p className="mt-2 max-w-md text-[14px] leading-relaxed text-ink-muted">
+              The college office can confirm the version and record any issue with the development
+              team.
+            </p>
+          </Reveal>
+          <Reveal delay={100}>
+            <Link to="/contact" className="btn-primary btn-sm shrink-0">
+              Contact the college
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
         </div>
       </section>
     </>
